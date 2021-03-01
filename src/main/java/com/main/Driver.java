@@ -4,6 +4,8 @@ import java.util.Scanner;
 
 import com.main.dao.AccountDao;
 import com.main.dao.AccountDaoImpl;
+import com.main.services.AuthService;
+import com.main.services.AuthServiceImpl;
 import com.main.ui.Menu;
 import com.main.ui.WelcomeMenu;
 
@@ -12,7 +14,7 @@ public class Driver {
 	public static void main(String[] args) {
 		Scanner scan = new Scanner(System.in);
 		AccountDao accounts = new AccountDaoImpl();
-		// AuthService auth = new AustServiceImpl();
+		AuthService auth = new AuthServiceImpl(accounts);
 		Menu welcome = new WelcomeMenu();
 		welcome.setScanner(scan);
 		welcome.display();		
