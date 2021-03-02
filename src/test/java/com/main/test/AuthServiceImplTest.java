@@ -10,7 +10,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.main.dao.AccountDao;
-import com.main.dao.AccountDaoImpl;
+import com.main.dao.AccountDaoKyro;
 import com.main.exceptions.InvalidPassword;
 import com.main.pojo.Account;
 import com.main.services.AuthService;
@@ -22,14 +22,14 @@ class AuthServiceImplTest {
 	void isExistingUser() {
 		// Arrange
 		Account account = new Account("Billy", "1234");
-		AccountDao accounts = new AccountDaoImpl();
+		AccountDao accounts = new AccountDaoKyro();
 		AuthService auth = new AuthServiceImpl(accounts);
 		
 		// Assess
 		assertFalse(auth.existingUser(account));
 	}
 
-	@Test
+	/*@Test
 	void testAuthenticateUser() {
 		// Arrange
 		Account account = new Account("Billy", "1234");
@@ -41,7 +41,7 @@ class AuthServiceImplTest {
 		auth.authenticateUser(account);
 		
 		// Assess
-	}
+	}*/
 	
 	/*@Test
 	void invalidPassword() {

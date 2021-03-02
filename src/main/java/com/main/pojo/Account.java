@@ -8,7 +8,7 @@ public class Account {
 	
 	private String password;
 	
-	private int balance;
+	private double balance;
 	
 	public Account() {
 		super();
@@ -44,11 +44,11 @@ public class Account {
 		this.password = password;
 	}
 
-	public int getBalance() {
+	public double getBalance() {
 		return balance;
 	}
 
-	public void setBalance(int balance) {
+	public void setBalance(double balance) {
 		this.balance = balance;
 	}
 

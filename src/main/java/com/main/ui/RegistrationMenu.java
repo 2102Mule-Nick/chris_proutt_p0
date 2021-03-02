@@ -2,19 +2,24 @@ package com.main.ui;
 
 import java.util.Scanner;
 
+import com.main.exceptions.UsernameTaken;
 import com.main.pojo.Account;
+import com.main.services.AuthService;
 
 public class RegistrationMenu implements Menu {
 
 	private Scanner scan;
-	private Menu AccountTypeMenu;
+	private Account account;
+	private AuthService auth;
+	private Menu checking;
 	private Menu nextMenu;
-	private Menu WelcomeMenu;
 	
-	public RegistrationMenu() {
+	
+	public RegistrationMenu(Account account, AuthService auth, Menu checking) {
 		super();
-		this.AccountTypeMenu = new AccountTypeMenu();
-		this.WelcomeMenu = new WelcomeMenu();
+		this.account = account;
+		this.checking = checking;
+		this.auth = auth;
 	}
 
 	@Override
@@ -24,31 +29,25 @@ public class RegistrationMenu implements Menu {
 
 	@Override
 	public void display() {
-		// Create an instance of an account
-				Account account = new Account();
 				
 				// Prompt & Set User's Name
 				System.out.println("Create An Account");
-				System.out.println("Enter New Account Holder's Name: ");
-				//String name = ;
-				account.setName(scan.nextLine());
 				
 				//Prompt and Set User's Username
 				System.out.println("Enter New Account Username : ");
-				String username = scan.nextLine();
-				account.setUsername(username);
+				this.account.setUsername(scan.nextLine());
 				
 				// Prompt and Set User's Password
 				System.out.println("Enter New Account Password : ");
-				String password = scan.nextLine();
-				account.setPassword(password);
+				this.account.setPassword(scan.nextLine());
 				
-				System.out.println(account.getName());
-				System.out.println(account.getUsername());
-				System.out.println(account.getPassword());
+				try {
+					auth.registerUser(account);
+				} catch (UsernameTaken e) {
+					System.out.println("Username already taken");
+				}
 				
-				nextMenu = AccountTypeMenu;
-				nextMenu.advance();
+				nextMenu = checking;
 	}
 
 	@Override
@@ -67,6 +66,12 @@ public class RegistrationMenu implements Menu {
 	public void setScanner(Scanner scan) {
 		// TODO Auto-generated method stub
 		this.scan = scan;
+	}
+
+	@Override
+	public void setWelcome(Menu welcome) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

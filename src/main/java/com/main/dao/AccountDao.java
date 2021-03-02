@@ -8,7 +8,7 @@ import com.main.pojo.Account;
 
 public interface AccountDao {
 	
-	public void createAccount(Account account) throws UsernameTaken;
+	public boolean createAccount(Account account) throws UsernameTaken;
 	
 	public List<Account> getAllUsers();
 	

@@ -8,16 +8,15 @@ public class WelcomeMenu implements Menu {
 	private Menu loginMenu;
 	private Menu registrationMenu;
 	
+	public WelcomeMenu(Menu login, Menu register) {
+		super();
+		this.loginMenu = login;
+		this.registrationMenu = register;
+	}
 	
 	@Override
 	public Menu advance() {
 		return nextMenu;
-	}
-
-	public WelcomeMenu() {
-		super();
-		this.loginMenu = new LoginMenu();
-		this.registrationMenu = new RegistrationMenu();
 	}
 
 	@Override
@@ -35,10 +34,9 @@ public class WelcomeMenu implements Menu {
 		if(option == 1) {
 			registrationMenu.setScanner(scan);
 			nextMenu = registrationMenu;
-			nextMenu.display();
 		} else if(option == 2) {
+			loginMenu.setScanner(scan);
 			nextMenu = loginMenu;
-			nextMenu.display();
 		} else if(option == 3) {
 			System.out.println("Thank you for banking with us.");
 			System.exit(1);
@@ -61,6 +59,12 @@ public class WelcomeMenu implements Menu {
 	@Override
 	public void setScanner(Scanner scan) {
 		this.scan = scan;		
+	}
+
+	@Override
+	public void setWelcome(Menu welcome) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

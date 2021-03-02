@@ -40,11 +40,11 @@ public class AuthServiceImpl implements AuthService {
 	}
 
 	@Override
-	public Account authenticateUser(Account account) throws InvalidPassword, UserNotFound {
-		Account existingAccount = AccountDao.getAccountbyUsername(account.getUsername());
+	public Account authenticateUser(Account account) throws InvalidPassword, UserNotFound, AccountNotFound {
+		Account existingUser = accountDao.getAccountbyUsername(account.getUsername());
 
-		if (existingAccount.getPassword().equals(account.getPassword())) {
-			return existingAccount;
+		if (existingUser.getPassword().equals(account.getPassword())) {
+			return existingUser;
 		}
 
 		throw new InvalidPassword();
@@ -52,8 +52,8 @@ public class AuthServiceImpl implements AuthService {
 
 	@Override
 	public Account registerUser(Account account) throws UsernameTaken {
-		// TODO Auto-generated method stub
-		return null;
+		accountDao.createAccount(account);
+		return account;
 	}
 
 	public AccountDao getAccountDao() {
