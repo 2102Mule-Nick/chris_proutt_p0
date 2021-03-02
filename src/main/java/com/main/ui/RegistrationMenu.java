@@ -11,14 +11,14 @@ public class RegistrationMenu implements Menu {
 	private Scanner scan;
 	private Account account;
 	private AuthService auth;
-	private Menu checking;
+	private Menu login;
 	private Menu nextMenu;
 	
 	
-	public RegistrationMenu(Account account, AuthService auth, Menu checking) {
+	public RegistrationMenu(Account account, AuthService auth, Menu login) {
 		super();
 		this.account = account;
-		this.checking = checking;
+		this.login = login;
 		this.auth = auth;
 	}
 
@@ -31,7 +31,7 @@ public class RegistrationMenu implements Menu {
 	public void display() {
 				
 				// Prompt & Set User's Name
-				System.out.println("Create An Account");
+				System.out.println("Create A New Account");
 				
 				//Prompt and Set User's Username
 				System.out.println("Enter New Account Username : ");
@@ -47,7 +47,7 @@ public class RegistrationMenu implements Menu {
 					System.out.println("Username already taken");
 				}
 				
-				nextMenu = checking;
+				nextMenu = login;
 	}
 
 	@Override

@@ -46,7 +46,7 @@ public class CheckingAccountMenu implements Menu {
 			double deposit = scan.nextDouble();
 			deposit(account, deposit);
 			System.out.println("Your current balance is " + account.getBalance());
-			nextMenu = welcome;
+			nextMenu = this;
 		} else if(option == 2) {
 			System.out.println("Amount to withdraw : ");
 			
@@ -57,12 +57,15 @@ public class CheckingAccountMenu implements Menu {
 			
 			double withdrawl = scan.nextDouble();
 			withdraw(account, withdrawl);
+			
+			nextMenu = this;
 			System.out.println("Your new balance is " + account.getBalance());
-			nextMenu = welcome;
+			nextMenu = this;
 		} else if(option == 3) {
 			checkBalance(account);
+			nextMenu = this;
 		} else if(option == 4) {
-			System.out.println("Thanks for banking with us");
+			System.out.println("Thank you for banking with us.");
 			nextMenu = welcome;
 		} else {
 			System.out.println("Invalid input! Please enter again: ");

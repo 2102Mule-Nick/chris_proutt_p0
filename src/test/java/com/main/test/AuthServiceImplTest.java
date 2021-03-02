@@ -1,17 +1,14 @@
 package com.main.test;
 
-import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.Rule;
-import org.junit.rules.ExpectedException;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.main.dao.AccountDao;
 import com.main.dao.AccountDaoKyro;
+import com.main.exceptions.AccountNotFound;
 import com.main.exceptions.InvalidPassword;
+import com.main.exceptions.UserNotFound;
 import com.main.pojo.Account;
 import com.main.services.AuthService;
 import com.main.services.AuthServiceImpl;
@@ -43,11 +40,11 @@ class AuthServiceImplTest {
 		// Assess
 	}*/
 	
-	/*@Test
-	void invalidPassword() {
+	@Test
+	void invalidPassword() throws InvalidPassword, UserNotFound, AccountNotFound {
 		// Arrange
 		Account account = new Account("Billy", " ");
-		AccountDao accounts = new AccountDaoImpl();
+		AccountDao accounts = new AccountDaoKyro();
 		AuthService auth = new AuthServiceImpl(accounts);
 		
 		// Act
@@ -57,7 +54,7 @@ class AuthServiceImplTest {
 		assertThrows(UserNotFound.class, () -> {
 			System.out.println("Invalid Password");
 		});
-	}*/
+	}
 
 	@Test
 	void testRegisterUser() {

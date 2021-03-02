@@ -36,11 +36,13 @@ public class LoginMenu implements Menu {
 	public void display() {
 		//Prompt and receive information
 		System.out.println("Welcome back");
-		System.out.print("Enter your username: ");
-		this.account.setUsername(scan.nextLine());
+		System.out.println("Enter your username : ");
+		String username = scan.nextLine();
+		this.account.setUsername(username);
 		
-		System.out.print("Enter your password");
-		this.account.setPassword(scan.nextLine());
+		System.out.println("Enter your password : ");
+		String password = scan.nextLine();
+		this.account.setPassword(password);
 		
 		// Authenticate account information
 		try {

@@ -24,7 +24,7 @@ public class Driver {
 		
 		Menu checking = new CheckingAccountMenu(account);
 		Menu login = new LoginMenu(account, auth, checking);
-		Menu register = new RegistrationMenu(account, auth, checking);
+		Menu register = new RegistrationMenu(account, auth, login);
 		
 		Menu welcome = new WelcomeMenu(login, register);
 		checking.setWelcome(welcome);
