@@ -3,12 +3,12 @@ package com.main;
 import java.util.Scanner;
 
 import com.main.dao.AccountDao;
-import com.main.dao.AccountDaoKyro;
+import com.main.dao.AccountDaoDatabase;
 import com.main.pojo.Account;
 import com.main.services.AuthService;
 import com.main.services.AuthServiceImpl;
 import com.main.ui.CheckingAccountMenu;
-import com.main.ui.LoginMenu;
+import com.main.ui.LoginMenuUi;
 import com.main.ui.Menu;
 import com.main.ui.RegistrationMenu;
 import com.main.ui.WelcomeMenu;
@@ -19,11 +19,11 @@ public class Driver {
 	public static Account account = new Account();
 	
 	public static void main(String[] args) {
-		AccountDao accounts = new AccountDaoKyro();
+		AccountDao accounts = new AccountDaoDatabase();
 		AuthService auth = new AuthServiceImpl(accounts);
 		
 		Menu checking = new CheckingAccountMenu(account);
-		Menu login = new LoginMenu(account, auth, checking);
+		Menu login = new LoginMenuUi(account, auth, checking);
 		Menu register = new RegistrationMenu(account, auth, checking);
 		
 		Menu welcome = new WelcomeMenu(login, register);

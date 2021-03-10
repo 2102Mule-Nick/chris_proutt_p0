@@ -2,57 +2,56 @@ package com.main.ui;
 
 import java.util.Scanner;
 
-import com.main.exceptions.UsernameTaken;
+import org.apache.log4j.Logger;
+
+import com.esotericsoftware.minlog.Log;
+import com.main.exceptions.AccountNotFound;
+import com.main.exceptions.InvalidPassword;
+import com.main.exceptions.UserNotFound;
 import com.main.pojo.Account;
 import com.main.services.AuthService;
 
-public class RegistrationMenu implements Menu {
-
+public class LoginMenuUi implements Menu {
+	
+	Logger log = Logger.getRootLogger();
+	
 	private Scanner scan;
 	private Account account;
 	private AuthService auth;
 	private Menu checking;
 	private Menu nextMenu;
 	
-	
-	public RegistrationMenu(Account account, AuthService auth, Menu checking) {
+	public LoginMenuUi(Account account, AuthService auth, Menu checking) {
 		super();
 		this.account = account;
-		this.checking = checking;
 		this.auth = auth;
+		this.checking = checking;
 	}
 
 	@Override
 	public Menu advance() {
+		// TODO Auto-generated method stub
 		return nextMenu;
 	}
 
 	@Override
 	public void display() {
-		System.out.println("Please Enter First Name : ");
-		String firstName = scan.next();
-		
-		System.out.println("Please Enter Last Name : ");
-		String lastName = scan.next();
-		
-		System.out.println("Please Enter New Username : ");
+				
+		System.out.println("Login");
+		System.out.println("Enter a username : ");
 		String username = scan.next();
+		System.out.println("Enter a password : ");
+		String password = scan.next();
 		
-		System.out.println("Please Enter Password : ");
-		String password = scan.nextLine();
-		
-		account.setFirstName(firstName);
-		account.setLastName(lastName);
 		account.setUsername(username);
 		account.setPassword(password);
-				
+		
 		try {
-			auth.registerUser(account);
-		} catch (UsernameTaken e) {
-			System.out.println("Username already taken");
+			auth.authenticateUser(account);
+			nextMenu = checking;
+		} catch (InvalidPassword | UserNotFound | AccountNotFound e) {
+			Log.error("Account not authenticated");
 		}
-				
-		nextMenu = checking;
 	}
 
 	@Override
@@ -63,20 +62,18 @@ public class RegistrationMenu implements Menu {
 
 	@Override
 	public Scanner getScanner() {
-		// TODO Auto-generated method stub
 		return this.scan;
 	}
 
 	@Override
 	public void setScanner(Scanner scan) {
-		// TODO Auto-generated method stub
 		this.scan = scan;
 	}
 
 	@Override
 	public void setWelcome(Menu welcome) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

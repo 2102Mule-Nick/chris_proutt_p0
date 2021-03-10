@@ -2,13 +2,15 @@ package com.main.pojo;
 
 public class Account {
 	
-	private String name;
+	private String firstName;
+	
+	private String lastName;
 	
 	private String username;
 	
 	private String password;
 	
-	private double balance;
+	private float balance;
 	
 	public Account() {
 		super();
@@ -18,14 +20,6 @@ public class Account {
 		super();
 		this.username = username;
 		this.password = password;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	public String getUsername() {
@@ -44,12 +38,28 @@ public class Account {
 		this.password = password;
 	}
 
-	public double getBalance() {
+	public float getBalance() {
 		return balance;
 	}
 
-	public void setBalance(double balance) {
+	public void setBalance(float balance) {
 		this.balance = balance;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 
 }

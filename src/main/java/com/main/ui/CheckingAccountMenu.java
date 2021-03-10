@@ -2,6 +2,7 @@ package com.main.ui;
 
 import java.util.Scanner;
 
+import com.esotericsoftware.minlog.Log;
 import com.main.pojo.Account;
 
 public class CheckingAccountMenu implements Menu {
@@ -88,15 +89,20 @@ public class CheckingAccountMenu implements Menu {
 	}
 
 	public void deposit(Account account, double deposit) {
-		double balance = account.getBalance();
-		balance += deposit;
-		account.setBalance(balance);
+		if(deposit > 0) {
+			float balance = account.getBalance();
+			balance += deposit;
+			account.setBalance(balance);
+		}
 	}
 	
 	public void withdraw(Account account, double withdrawl) {
-		double balance = account.getBalance();
-		balance -= withdrawl;
-		account.setBalance(balance);
+		if(withdrawl < account.getBalance()) {
+			float balance = account.getBalance();
+			balance -= withdrawl;
+			account.setBalance(balance);
+			Log.info("Account balance updated");
+		}
 	}
 	
 	public void checkBalance(Account account) {

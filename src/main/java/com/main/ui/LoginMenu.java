@@ -35,12 +35,14 @@ public class LoginMenu implements Menu {
 	@Override
 	public void display() {
 		//Prompt and receive information
-		System.out.println("Welcome back");
-		System.out.print("Enter your username: ");
+		//System.out.println("Welcome back");
+		System.out.println("Enter your username : ");
 		this.account.setUsername(scan.nextLine());
 		
-		System.out.print("Enter your password");
-		this.account.setPassword(scan.nextLine());
+		if(account.getUsername() != null) {
+			System.out.println("Enter your password : ");
+			this.account.setPassword(scan.nextLine());
+		}
 		
 		// Authenticate account information
 		try {

@@ -10,18 +10,10 @@ import com.main.exceptions.UserNotFound;
 import com.main.exceptions.UsernameTaken;
 import com.main.pojo.Account;
 
-/**
- * @author Proutt
- *
- */
 public class AuthServiceImpl implements AuthService {
 	
 	private AccountDao accountDao;
 	
-	/**
-	 * @param accountDao 
-	 * 
-	 */
 	public AuthServiceImpl(AccountDao accountDao) {
 		super();
 		this.accountDao = accountDao;
