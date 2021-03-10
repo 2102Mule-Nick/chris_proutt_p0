@@ -4,11 +4,10 @@ import com.main.pojo.Account;
 import com.main.pojo.Transaction;
 
 public interface TransactionService {
-	public void createTransaction(Account account, Transaction newTrans);
+
+	void deposit(Account account, float amount) throws IllegalArgumentException;
 	
-	public void updatebalance(Account account);
+	public void withdrawl(Account account, float amount);
 	
-	public Transaction getTransaction(Account account);
-	
-	public void deleteTransaction(Account account);
+	public float checkBalance(Account account);
 }

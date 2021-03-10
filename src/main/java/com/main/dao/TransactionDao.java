@@ -14,7 +14,5 @@ public interface TransactionDao {
 	
 	public Transaction getTransaction(Account account);
 	
-	public void deleteTransaction(Account account);
-
 	public void setConn(Connection conn);
 }

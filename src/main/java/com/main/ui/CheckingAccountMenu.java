@@ -12,7 +12,6 @@ public class CheckingAccountMenu implements Menu {
 	
 	private Scanner scan;
 	private Account account;
-	private Transaction newTrans;
 	private TransactionService trans;
 	private Menu welcome;
 	private Menu nextMenu;
@@ -47,27 +46,29 @@ public class CheckingAccountMenu implements Menu {
 			
 			while(!scan.hasNext()) {
 				System.out.println("Invalid amount. Enter again :");
-				scan.nextDouble();
+				scan.nextFloat();
 			}
 			
 			float deposit = scan.nextFloat();
-			deposit(account, deposit);
+			
+			trans.deposit(account, deposit);
 			System.out.println("Your current balance is " + account.getBalance());
-			nextMenu = welcome;
+			nextMenu = this;
 		} else if(option == 2) {
 			System.out.println("Amount to withdraw : ");
 			
 			while(!scan.hasNext()) {
 				System.out.println("Invalid amount. Enter again :");
-				scan.nextDouble();
+				scan.nextFloat();
 			}
 			
-			double withdrawl = scan.nextDouble();
-			withdraw(account, withdrawl);
+			float withdrawl = scan.nextFloat();
+			
+			trans.withdrawl(account, withdrawl);
 			System.out.println("Your new balance is " + account.getBalance());
-			nextMenu = welcome;
+			nextMenu = this;
 		} else if(option == 3) {
-			checkBalance(account);
+			trans.checkBalance(account);
 		} else if(option == 4) {
 			System.out.println("Thanks for banking with us");
 			nextMenu = welcome;
@@ -92,32 +93,6 @@ public class CheckingAccountMenu implements Menu {
 	@Override
 	public void setScanner(Scanner scan) {
 		this.scan = scan;
-	}
-
-	public void deposit(Account account, float deposit) {
-		if(deposit > 0) {
-			newTrans.setAmount(deposit);
-			newTrans.setType("deposit");
-			
-			trans.createTransaction(account, newTrans);
-			
-			float balance = account.getBalance();
-			balance += deposit;
-			account.setBalance(balance);
-		}
-	}
-	
-	public void withdraw(Account account, double withdrawl) {
-		if(withdrawl < account.getBalance()) {
-			float balance = account.getBalance();
-			balance -= withdrawl;
-			account.setBalance(balance);
-			Log.info("Account balance updated");
-		}
-	}
-	
-	public void checkBalance(Account account) {
-		System.out.println("Your balance is " + account.getBalance());
 	}
 
 	@Override

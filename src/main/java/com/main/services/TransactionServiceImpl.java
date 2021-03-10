@@ -1,59 +1,71 @@
 package com.main.services;
 
-import java.sql.Connection;
-
 import org.apache.log4j.Logger;
 
 import com.main.dao.AccountDao;
+import com.main.dao.TransactionDao;
 import com.main.pojo.Account;
 import com.main.pojo.Transaction;
-import com.main.utilies.DatabaseConnection;
 
 public class TransactionServiceImpl implements TransactionService {
 	
 	Logger log = Logger.getRootLogger();
 	
-	Transaction transaction;
 	private AccountDao accountDao;
+	private Transaction trans;
+	private TransactionDao transactions;
 	
 	public TransactionServiceImpl(AccountDao accountdao) {
 		this.accountDao = accountdao;
 	}
 
 	@Override
-	public void createTransaction(Account account, Transaction newTrans) {
-		
-		
-	}
-	
-	@Override
-	public void updatebalance(Account account) {
-		Transaction transaction = new Transaction();
-		
-		log.trace("User Creation method called");
-		
-		Connection conn = DatabaseConnection.getConnection();
-		
-		String sql = "update * from accounts where ";
-	}
-
-	@Override
-	public Transaction getTransaction(Account account) {
-		Transaction transaction = new Transaction();
-		
-		log.trace("User Creation method called");
-		
-		Connection conn = DatabaseConnection.getConnection();
-		
-		String sql = "select * from accounts where ";
-		
-		return null;
-	}
-
-	@Override
-	public void deleteTransaction(Account account) {
+	public void deposit(Account account, float amount) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
+		float temp;
+		if (amount > 0) {
+			temp = account.getBalance() + amount;
+			account.setBalance(temp);
+			accountDao.updateUser(account);
+			trans.setAmount(temp);
+			trans.setType("deposit");
+			transactions.createTransation(account, trans);
+			System.out.println("You have deposited $" + amount);
+			System.out.println("Your current balance is: \n" + account.getBalance() + "\n");
+		}
+		else {
+			log.error("Amount is invalid");
+			throw new IllegalArgumentException(); // needs to be more detailed exception in the future
+		}
+		
+	}
 
+	@Override
+	public void withdrawl(Account account, float amount) {
+
+		float temp = 0;
+		
+		if ((amount > 0) && (amount < account.getBalance())) {
+			temp = account.getBalance() - amount;
+			
+			
+			account.setBalance(temp);
+			accountDao.updateUser(account);
+			trans.setAmount(temp);
+			trans.setType("deposit");
+			transactions.createTransation(account, trans);
+			System.out.println("Your balance is now: \n" + account.getBalance() + "\n");
+		}
+		else {
+			log.error("Overdraw attempt!");
+			throw new IllegalArgumentException(); // needs to be more detailed exception in the future
+		}
+		
+	}
+
+	@Override
+	public float checkBalance(Account account) {
+		return accountDao.getAccountBalance(account);
 	}
 
 }
