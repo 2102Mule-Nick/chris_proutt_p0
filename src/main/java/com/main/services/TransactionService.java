@@ -4,7 +4,7 @@ import com.main.pojo.Account;
 import com.main.pojo.Transaction;
 
 public interface TransactionService {
-	public void createTransaction(Account account);
+	public void createTransaction(Account account, Transaction newTrans);
 	
 	public void updatebalance(Account account);
 	

@@ -17,10 +17,15 @@ public class DatabaseConnection {
 
 	public static String PASSWORD;
 	
-	private static DatabaseConnection connectionFactory = null;
+	public static String DB_NAME;
+	
+	private static DatabaseConnection databaseConnection = null;
 
 	private DatabaseConnection() {
-		URL = "jdbc:postgresql://" + System.getenv("BANK_DB_URL") + ":5432/" + "bankapp" + "?";
+		
+		DB_NAME = System.getenv("BANK_DB_NAME");
+		
+		URL = "jdbc:postgresql://" + System.getenv("BANK_DB_URL") + ":5432/" + "postgres?currentSchema=bankapp";
 
 		USERNAME = System.getenv("BANK_DB_USERNAME");
 
@@ -46,11 +51,11 @@ public class DatabaseConnection {
 	
 	public static synchronized Connection getConnection() {
 		
-		if (connectionFactory == null) {
-			connectionFactory = new DatabaseConnection();
+		if (databaseConnection == null) {
+			databaseConnection = new DatabaseConnection();
 		}
 
-		return connectionFactory.createConnection();
+		return databaseConnection.createConnection();
 
 	}
 

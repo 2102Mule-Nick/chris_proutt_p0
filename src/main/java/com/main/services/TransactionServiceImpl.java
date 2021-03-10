@@ -4,6 +4,7 @@ import java.sql.Connection;
 
 import org.apache.log4j.Logger;
 
+import com.main.dao.AccountDao;
 import com.main.pojo.Account;
 import com.main.pojo.Transaction;
 import com.main.utilies.DatabaseConnection;
@@ -12,13 +13,16 @@ public class TransactionServiceImpl implements TransactionService {
 	
 	Logger log = Logger.getRootLogger();
 	
-	public TransactionServiceImpl() {
-		// TODO Auto-generated constructor stub
+	Transaction transaction;
+	private AccountDao accountDao;
+	
+	public TransactionServiceImpl(AccountDao accountdao) {
+		this.accountDao = accountdao;
 	}
 
 	@Override
-	public void createTransaction(Account account) {
-		// TODO Auto-generated method stub
+	public void createTransaction(Account account, Transaction newTrans) {
+		
 		
 	}
 	

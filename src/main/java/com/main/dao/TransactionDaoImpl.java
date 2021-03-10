@@ -11,6 +11,7 @@ import org.apache.log4j.Logger;
 import com.esotericsoftware.minlog.Log;
 import com.main.pojo.Account;
 import com.main.pojo.Transaction;
+import com.main.utilies.DatabaseConnection;
 
 public class TransactionDaoImpl implements TransactionDao {
 
@@ -24,6 +25,8 @@ public class TransactionDaoImpl implements TransactionDao {
 
 	@Override
 	public void createTransation(Account account, Transaction transaction) {
+log.trace("User Creation method called");
+		
 		// Connect to the database
 		String sql = "insert into transaction (user_id, account_id, transaction_type, amount, opening_balance)";
 		

@@ -4,18 +4,24 @@ import java.util.Scanner;
 
 import com.esotericsoftware.minlog.Log;
 import com.main.pojo.Account;
+import com.main.pojo.Transaction;
+import com.main.services.TransactionService;
+import com.main.services.TransactionServiceImpl;
 
 public class CheckingAccountMenu implements Menu {
 	
 	private Scanner scan;
 	private Account account;
+	private Transaction newTrans;
+	private TransactionService trans;
 	private Menu welcome;
 	private Menu nextMenu;
 	private Menu prevMenu;
 	
-	public CheckingAccountMenu(Account account) {
+	public CheckingAccountMenu(Account account, TransactionService trans) {
 		super();
 		this.account = account;
+		this.trans = trans;
 	}
 
 	@Override
@@ -44,7 +50,7 @@ public class CheckingAccountMenu implements Menu {
 				scan.nextDouble();
 			}
 			
-			double deposit = scan.nextDouble();
+			float deposit = scan.nextFloat();
 			deposit(account, deposit);
 			System.out.println("Your current balance is " + account.getBalance());
 			nextMenu = welcome;
@@ -88,8 +94,13 @@ public class CheckingAccountMenu implements Menu {
 		this.scan = scan;
 	}
 
-	public void deposit(Account account, double deposit) {
+	public void deposit(Account account, float deposit) {
 		if(deposit > 0) {
+			newTrans.setAmount(deposit);
+			newTrans.setType("deposit");
+			
+			trans.createTransaction(account, newTrans);
+			
 			float balance = account.getBalance();
 			balance += deposit;
 			account.setBalance(balance);
