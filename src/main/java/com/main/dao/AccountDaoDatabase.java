@@ -26,17 +26,18 @@ public class AccountDaoDatabase implements AccountDao {
 		
 		conn = DatabaseConnection.getConnection();
 		
-		String sql = "insert into users (first_name, last_name, username, pword) values ('" + account.getFirstName() + "', '" + account.getLastName() + "', '" + account.getUsername() + "', '" + account.getPassword() + "')";
-		
-		Statement stmt;
+		String sql = "insert into users (first_name, last_name, username, pword) values (?, ?, ?, ?)";
+
 		try {
-			stmt = conn.prepareStatement(sql);
-			stmt.execute(sql);
-			conn.close();
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, account.getFirstName());
+			pstmt.setString(2, account.getLastName());
+			pstmt.setString(3, account.getUsername());
+			pstmt.setString(4, account.getPassword());
+			pstmt.executeUpdate();
 			log.info("User successfully created");
 		} catch (SQLException e) {
 			log.error("User was not created");
-			e.printStackTrace();
 		}
 	}
 
