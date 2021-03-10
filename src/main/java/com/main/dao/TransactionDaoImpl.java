@@ -28,19 +28,18 @@ public class TransactionDaoImpl implements TransactionDao {
 		log.trace("User Creation method called");
 		
 		// Connect to the database
-		String sql = "insert into transaction (user_id, account_id, transaction_type, amount, opening_balance, ending_balance) values (?, ?, ?, ?, ?)";
+		String sql = "insert into transactions (transaction_type, amount, opening_balance, ending_balance) values (?, ?, ?, ?)";
+		
+		conn = DatabaseConnection.getConnection();
+		
 		try {
-			PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, transaction.getType());
+			pstmt.setFloat(2, transaction.getAmount());
+			pstmt.setFloat(3, transaction.getOpening_balance());
+			pstmt.setFloat(4, transaction.getOpening_balance());
 			
-			pstmt.setString(1, "select user_id from users where username = " + "'" + account.getUsername() + "'");
-			pstmt.setString(2, "select account_id from accounts where user_id = (select user_id from users where username = " + "'" + account.getUsername() + "'");
-			pstmt.setString(3, transaction.getType());
-			pstmt.setFloat(4, transaction.getAmount());
-			pstmt.setFloat(5, account.getBalance());
-			pstmt.executeUpdate();
-			
-			ResultSet rs = pstmt.getGeneratedKeys();
-			rs.next();
+			pstmt.execute();
 			
 		} catch (SQLException e) {
 			Log.error("Couldn't connect to the database");
@@ -50,8 +49,11 @@ public class TransactionDaoImpl implements TransactionDao {
 	@Override
 	public Transaction getTransaction(Account account) {
 		// Create Sql query
-		String sql = "select * from transactions where user_id = (select * from users where username = " + "'" + account.getUsername() + "'" + ")";
+		String sql = "select top * from transactions where user_id = (select * from users where username = ?)";
 		// Connect to the database
+		
+		conn = DatabaseConnection.getConnection();
+		
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(sql);
 			pstmt.executeUpdate();

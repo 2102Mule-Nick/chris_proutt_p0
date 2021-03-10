@@ -2,6 +2,8 @@ package com.main.ui;
 
 import java.util.Scanner;
 
+import javax.transaction.InvalidTransactionException;
+
 import com.esotericsoftware.minlog.Log;
 import com.main.pojo.Account;
 import com.main.pojo.Transaction;
@@ -51,7 +53,11 @@ public class CheckingAccountMenu implements Menu {
 			
 			float deposit = scan.nextFloat();
 			
-			trans.deposit(account, deposit);
+			try {
+				trans.deposit(account, deposit);
+			} catch (InvalidTransactionException e) {
+				Log.error("Deposit invalid");
+			}
 			System.out.println("Your current balance is " + account.getBalance());
 			nextMenu = this;
 		} else if(option == 2) {
@@ -64,7 +70,11 @@ public class CheckingAccountMenu implements Menu {
 			
 			float withdrawl = scan.nextFloat();
 			
-			trans.withdrawl(account, withdrawl);
+			try {
+				trans.withdrawl(account, withdrawl);
+			} catch (InvalidTransactionException e) {
+				Log.error("Invalid withdrawl");
+			}
 			System.out.println("Your new balance is " + account.getBalance());
 			nextMenu = this;
 		} else if(option == 3) {

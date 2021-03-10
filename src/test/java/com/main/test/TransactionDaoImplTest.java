@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 import org.junit.jupiter.api.AfterEach;
@@ -46,18 +47,23 @@ class TransactionDaoImplTest {
 		pstmt.executeUpdate();
 	}
 
-	@Test
-	void testCreateTransation() {
-		/*//creating a real stmt to be able to actually communicate with our db
-		String sql = "insert into transactions (user_id,  , amount) values(?, ?)";
-				
+	
+	
+	/*@Test
+	void testCreateTransation() throws SQLException {
+		//creating a real stmt to be able to actually communicate with our db
+		String sql = "insert into transactions (amount, opening_balance, closing_balance) values (?, ?, ?)";
+		
 		Connection realConnection = DatabaseConnection.getConnection();
-				
+		
 		PreparedStatement realStmt = realConnection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-				
+		
 		//Spying on our real stmt, so that we can later verify the correct methods are invoked
 		PreparedStatement spy = Mockito.spy(realStmt);
-
+		
+		when(conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS).thenReturn(spy));
+		
+								
 		//setting up our Mock connection, to reaturn our real stmt, we are spying on
 		//if we did not do this, and used a real connection on this test, the connection would create
 		//a new statement inside of our createCart method, and we could not spy on it
@@ -93,8 +99,8 @@ class TransactionDaoImplTest {
 				
 		ResultSet rs = checkStmt.executeQuery();
 				
-		assertTrue(rs.next());*/
-	}
+		assertTrue(rs.next());
+	}*/
 
 	@Test
 	void testGetTransaction() {

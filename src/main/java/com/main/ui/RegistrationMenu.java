@@ -39,7 +39,9 @@ public class RegistrationMenu implements Menu {
 		String username = scan.next();
 		
 		System.out.println("Please Enter Password : ");
-		String password = scan.nextLine();
+		String password = scan.next();
+		
+		System.out.println("Thank you for registering");
 		
 		account.setFirstName(firstName);
 		account.setLastName(lastName);
