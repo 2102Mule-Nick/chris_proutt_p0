@@ -17,8 +17,9 @@ public class TransactionServiceImpl implements TransactionService {
 	private AccountDao accountDao;
 	private TransactionDao transactions;
 	
-	public TransactionServiceImpl(AccountDao accountdao) {
+	public TransactionServiceImpl(AccountDao accountdao, TransactionDao transactions) {
 		this.accountDao = accountdao;
+		this.transactions = transactions;
 	}
 
 	@Override
@@ -30,7 +31,6 @@ public class TransactionServiceImpl implements TransactionService {
 			account.setBalance(temp);
 			
 			//new transaction
-			transactions = new TransactionDaoImpl();
 			Transaction transaction = new Transaction();
 			transaction.setType("deposit");
 			transaction.setOpening_balance(amount);
@@ -38,6 +38,7 @@ public class TransactionServiceImpl implements TransactionService {
 			transactions.createTransation(account, transaction);
 			
 			accountDao.updateUser(account);
+			accountDao.updateAccountBalance(transaction, account);
 			System.out.println("You have deposited $" + amount);
 			System.out.println("Your current balance is: \n" + account.getBalance() + "\n");
 		}
@@ -65,7 +66,7 @@ public class TransactionServiceImpl implements TransactionService {
 			transactions.createTransation(account, transaction);
 			
 			accountDao.updateUser(account);
-
+			accountDao.updateAccountBalance(transaction, account);
 			System.out.println("Your balance is now: \n" + account.getBalance() + "\n");
 		}
 		else {

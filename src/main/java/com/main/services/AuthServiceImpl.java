@@ -45,6 +45,7 @@ public class AuthServiceImpl implements AuthService {
 	@Override
 	public Account registerUser(Account account) throws UsernameTaken {
 		accountDao.createAccount(account);
+		accountDao.createBankAccount(account);
 		return account;
 	}
 

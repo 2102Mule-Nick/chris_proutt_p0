@@ -4,6 +4,8 @@ import java.util.Scanner;
 
 import com.main.dao.AccountDao;
 import com.main.dao.AccountDaoDatabase;
+import com.main.dao.TransactionDao;
+import com.main.dao.TransactionDaoImpl;
 import com.main.pojo.Account;
 import com.main.services.AuthService;
 import com.main.services.AuthServiceImpl;
@@ -22,8 +24,9 @@ public class Driver {
 	
 	public static void main(String[] args) {
 		AccountDao accounts = new AccountDaoDatabase();
+		TransactionDao transactions = new TransactionDaoImpl();
 		AuthService auth = new AuthServiceImpl(accounts);
-		TransactionService trans = new TransactionServiceImpl(accounts);
+		TransactionService trans = new TransactionServiceImpl(accounts, transactions);
 		
 		Menu checking = new CheckingAccountMenu(account, trans);
 		Menu login = new LoginMenuUi(account, auth, checking);

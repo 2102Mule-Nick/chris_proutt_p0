@@ -5,6 +5,7 @@ import org.apache.log4j.Logger;
 import com.main.exceptions.AccountNotFound;
 import com.main.exceptions.UsernameTaken;
 import com.main.pojo.Account;
+import com.main.pojo.Transaction;
 import com.main.utilies.DatabaseConnection;
 
 import java.sql.Connection;
@@ -39,6 +40,7 @@ public class AccountDaoDatabase implements AccountDao {
 			log.error("User was not created");
 		}
 	}
+	
 
 	@Override
 	public Account getAccountbyUsername(String username) throws AccountNotFound {
@@ -138,4 +140,46 @@ public class AccountDaoDatabase implements AccountDao {
 		}
 		return 0;
 	}
+
+
+	@Override
+	public void createBankAccount(Account account) {
+		log.trace("Bank Account Creation method called");
+		
+		conn = DatabaseConnection.getConnection();
+		
+		String sql = "insert into accounts (user_id, balance) values ((select user_id from users where username = ?), ?)";
+	
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, account.getUsername());
+			pstmt.setDouble(2, 0.0);
+			pstmt.executeUpdate();
+			log.info("Bank account successfully created");
+		} catch (SQLException e) {
+			log.error("Bank account was not created");
+		}
+	}
+
+
+	@Override
+	public void updateAccountBalance(Transaction transaction, Account account) {
+		log.trace("Update Account Balance method called");
+		
+		conn = DatabaseConnection.getConnection();
+		
+		String sql = "update accounts set balance = ? WHERE user_id = (select user_id from users where username = ?)";
+		
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setFloat(1, transaction.getClosing_balance());
+			pstmt.setString(2, account.getUsername());
+			
+			pstmt.executeUpdate();
+			log.info("Update Successful");
+		} catch (SQLException e) {
+			log.error("Balance update Error");
+		}
+	}
+
 }
