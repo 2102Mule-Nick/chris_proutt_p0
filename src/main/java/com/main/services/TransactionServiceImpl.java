@@ -33,7 +33,8 @@ public class TransactionServiceImpl implements TransactionService {
 			//new transaction
 			Transaction transaction = new Transaction();
 			transaction.setType("deposit");
-			transaction.setOpening_balance(amount);
+			transaction.setAmount(amount);
+			transaction.setOpening_balance(account.getBalance());
 			transaction.setClosing_balance(temp);
 			transactions.createTransation(account, transaction);
 			

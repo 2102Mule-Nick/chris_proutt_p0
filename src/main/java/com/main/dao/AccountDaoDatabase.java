@@ -131,7 +131,6 @@ public class AccountDaoDatabase implements AccountDao {
 			
 			while(rs.next()) {
 				log.info("User found in the database");
-				account = new Account();
 				account.setBalance(rs.getFloat(1));
 				return account.getBalance();
 			}

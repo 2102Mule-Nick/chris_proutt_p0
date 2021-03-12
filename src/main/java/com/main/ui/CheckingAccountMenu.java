@@ -34,7 +34,7 @@ public class CheckingAccountMenu implements Menu {
 	public void display() {
 		
 		// Prompt Checking Options
-		System.out.println("Checking Account Menu");
+		System.out.println("\nChecking Account Menu");
 		System.out.println("1 - Deposit Money");
 		System.out.println("2 - Withdraw Money");
 		System.out.println("3 - Check Balance");
@@ -58,7 +58,7 @@ public class CheckingAccountMenu implements Menu {
 			} catch (InvalidTransactionException e) {
 				Log.error("Deposit invalid");
 			}
-			System.out.println("Your current balance is " + account.getBalance());
+			System.out.println("\nYour current balance is " + account.getBalance());
 			nextMenu = this;
 		} else if(option == 2) {
 			System.out.println("Amount to withdraw : ");
@@ -75,16 +75,17 @@ public class CheckingAccountMenu implements Menu {
 			} catch (InvalidTransactionException e) {
 				Log.error("Invalid withdrawl");
 			}
-			System.out.println("Your new balance is " + account.getBalance());
+			System.out.println("\nYour new balance is " + account.getBalance());
 			nextMenu = this;
 		} else if(option == 3) {
-			trans.checkBalance(account);
+			System.out.println("\nYour current balance is " + account.getBalance());
+			nextMenu = this;
 		} else if(option == 4) {
-			System.out.println("Thanks for banking with us");
+			System.out.println("\nThanks for banking with us");
 			nextMenu = welcome;
 		} else {
-			System.out.println("Invalid input! Please enter again: ");
-			option = scan.nextInt();
+			System.out.println("\nInvalid input! Please enter again: ");
+			nextMenu = this;
 		}
 	}
 

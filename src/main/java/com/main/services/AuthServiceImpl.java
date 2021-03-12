@@ -3,6 +3,8 @@
  */
 package com.main.services;
 
+import org.apache.log4j.Logger;
+
 import com.main.dao.AccountDao;
 import com.main.exceptions.AccountNotFound;
 import com.main.exceptions.InvalidPassword;
@@ -11,6 +13,8 @@ import com.main.exceptions.UsernameTaken;
 import com.main.pojo.Account;
 
 public class AuthServiceImpl implements AuthService {
+	
+	Logger log = Logger.getRootLogger();
 	
 	private AccountDao accountDao;
 	
@@ -34,8 +38,9 @@ public class AuthServiceImpl implements AuthService {
 	@Override
 	public Account authenticateUser(Account account) throws InvalidPassword, UserNotFound, AccountNotFound {
 		Account existingUser = accountDao.getAccountbyUsername(account.getUsername());
-
+		
 		if (existingUser.getPassword().equals(account.getPassword())) {
+			accountDao.getAccountBalance(existingUser);
 			return existingUser;
 		}
 
@@ -46,6 +51,7 @@ public class AuthServiceImpl implements AuthService {
 	public Account registerUser(Account account) throws UsernameTaken {
 		accountDao.createAccount(account);
 		accountDao.createBankAccount(account);
+		log.info("User registered");
 		return account;
 	}
 
